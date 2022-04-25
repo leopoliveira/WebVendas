@@ -1,0 +1,137 @@
+﻿@model SaleItem
+@{
+    List<Product> products = ViewData["Products"] != null ? (List<Product>)ViewData["Products"] : null;
+    List<SaleItem> saleItems = ViewData["SaleItems"] != null ? (List<SaleItem>)ViewData["SaleItems"] : null;
+
+    Sale sale = ViewBag.acutalSale as Sale;
+
+    ViewData["Title"] = "Nova Venda";
+}
+
+<div class="container mt-5 align-items-center">
+
+    <div class="row g-3">
+        <div class="col-8">
+            <h1>Nova Venda para <b>@sale.Client.Name</b></h1>
+        </div>
+        <div class="col-2">
+            <a asp-action="Close" asp-controller="Sale" asp-route-id="@Model.SaleId" asp-route-totalPrice="@saleItems.Sum(si => si.TotalValue)" class="btn btn-lg btn-success">Fechar Venda</a>
+        </div>
+        <div class="col-2">
+            <a asp-action="Index" asp-controller="Sale" class="btn btn-lg btn-danger">Sair</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <form method="post" asp-controller="SaleItem" asp-action="Create" class="row g-3" aria-label="itemsPedido">
+        <div>
+            <input asp-for="SaleItemId" hidden />
+            <input asp-for="SaleId" hidden id="actualSaleID" />
+        </div>
+
+        <div class="col-md-8">
+            <label asp-for="ProductId" class="form-label">Produto:</label>
+            <select asp-for="ProductId" class="form-select" onchange="GetSelectedProductValue()" id="selectedProduct">
+                <option selected value="">Escolha o Produto...</option>
+                @if (products != null)
+                {
+                    foreach (Product product in products)
+                    {
+                        <option value="@product.ProductId">@product.Name</option>
+                    }
+                }
+
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label asp-for="Quantity" class="form-label">Quantidade:</label>
+            <input asp-for="Quantity" class="form-control">
+        </div>
+
+        <div class="col-md-2">
+            <label asp-for="Value" class="form-label">Valor (R$):</label>
+            <input asp-for="Value" class="form-control" id="productValue" onblur="this.value = this.value.replace(/,/g, '.')">
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Adicionar</button>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Total do Pedido:</label>
+                    <input class="form-control" disabled value="@saleItems.Sum(si => si.TotalValue).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"))" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-12">
+            @if (saleItems != null)
+            {
+                <table class="table table-striped productTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Produto
+                            </th>
+                            <th scope="col">
+                                Valor Unitário
+                            </th>
+                            <th scope="col">
+                                Valor Total
+                            </th>
+                            <th scope="col" class="text-center">
+                                Ação
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (SaleItem item in saleItems)
+                        {
+                        <tr>
+                            <td>
+                                @item.Product.Name
+                            </td>
+                            <td>
+                                @item.Product.Value.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"))
+                            </td>
+                            <td>
+                                @item.TotalValue.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"))
+                            </td>
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.SaleItemId" asp-route-saleId="@Model.SaleId"
+                                   class="btn btn-outline-danger">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1>
+                    Não há nenhum item cadastrado.
+                </h1>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/js/SaleItem.js" type="text/javascript"></script>
+}

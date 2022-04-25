@@ -1,0 +1,29 @@
+﻿@model Product
+
+@{ 
+    ViewData["Title"] = "Excluir";
+}
+
+<div class="container mt-5 align-items-center">
+    <div class="col-10">
+        <h1>Excluir Produto</h1>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <form method="post" asp-controller="Product" asp-action="Delete" class="row g-3" aria-label="dadosProduto">
+
+        <input asp-for="ProductId" class="form-control" hidden>
+
+        <p class="lead fw-bold">
+            Tem certeza que deseja excluir o produto <span class="alert alert-danger">@Model.Name</span> ?
+        </p>
+        <div class="container">
+            <a asp-action="Index" class="btn btn-lg btn-primary">Cancelar</a>
+            <button type="submit" class="btn btn-lg btn-danger">Excluir</button>
+        </div>
+
+    </form>
+</div>

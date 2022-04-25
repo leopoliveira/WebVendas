@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WebVendas.Models.Entities.Client>
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="container mt-5 align-items-center">
+
+    <div class="row g-3">
+        <div class="col-8">
+            <h1>Clientes</h1>
+        </div>
+        <div class="col-2">
+            <a asp-action="Create" class="btn btn-lg btn-primary">Cadastrar Cliente</a>
+        </div>
+        <div class="col-2">
+            <a asp-action="Client" asp-controller="Sale" class="btn btn-lg btn-success">Nova Venda</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped productTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">
+                                Nome
+                            </th>
+                            <th scope="col" class="text-center">
+                                Contato
+                            </th>
+                            <th scope="col" class="text-center">
+                                E-mail
+                            </th>
+                            <th scope="col" class="text-center">
+                                Endereço
+                            </th>
+                            <th scope="col" class="text-center">
+                                Cidadade
+                            </th>
+                            <th scope="col" class="text-center">
+                                Estado
+                            </th>
+                            <th scope="col" class="text-center">
+                                CEP
+                            </th>
+                            <th scope="col" class="text-center">
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Client client in Model)
+                        {
+                        <tr>
+                            <td class="text-center align-middle">
+                                @client.Name
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.Contact
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.Email
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.Address
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.City
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.State
+                            </td>
+                            <td class="text-center align-middle">
+                                @client.ZipCode
+                            </td>
+                            <td>
+                                <a asp-action="Create" asp-route-id="@client.ClientId"
+                                   class="btn btn-outline-primary">
+                                    Editar
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@client.ClientId"
+                                   class="btn btn-outline-danger">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1>
+                    Não há nenhum cliente cadastrado.
+                </h1>
+            }
+        </div>
+    </div>
+
+</div>

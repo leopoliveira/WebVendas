@@ -1,0 +1,64 @@
+﻿@{ 
+    //Get Actual Controller
+    var actualController = ViewContext.RouteData.Values["controller"].ToString();
+
+    var saleController = actualController == "Sale" ? "active" : "";
+    var clientController = actualController == "Client" ? "active" : "";
+    var productController = actualController == "Product" ? "active" : "";
+    var dashboardController = actualController == "Dashboard" ? "active" : "";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] :: Explosão do Sabor</title>
+
+    <!-- Imports -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-cerulean.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebVendas.styles.css" asp-append-version="true" />
+
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="~/img/favicon.ico"/>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Sale" asp-action="Index">
+                    <img src="~/img/Logo.png" style="width: 110px; height:100%;" alt="Logo Explosão do Sabor" />
+                </a>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link fs-5 fw-bold @saleController" asp-area="" asp-controller="Sale" asp-action="Index">Inicio</a>
+                    </li>
+                    <li class="nav-item fs-5 fw-bold">
+                        <a class="nav-link @productController" asp-area="" asp-controller="Product" asp-action="Index">Produtos</a>
+                    </li>
+                    <li class="nav-item fs-5 fw-bold">
+                        <a class="nav-link @clientController" asp-area="" asp-controller="Client" asp-action="Index">Clientes</a>
+                    </li>
+                    <li class="nav-item fs-5 fw-bold">
+                        <a class="nav-link  @dashboardController disabled" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="~/js/site.js" asp-append-version="true"></script>-->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

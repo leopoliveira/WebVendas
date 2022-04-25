@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Sale>
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<div class="container mt-5 align-items-center">
+
+    <div class="row g-3">
+        <div class="col-10">
+            <h1>Vendas</h1>
+        </div>
+        <div class="col-2">
+            <a asp-action="Client" class="btn btn-lg btn-primary">Nova Venda</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nº da Venda
+                            </th>
+                            <th>
+                                Cliente
+                            </th>
+                            <th>
+                                Valor da Venda
+                            </th>
+                            <th>
+                                Data da Venda
+                            </th>
+                           <th class="text-center">
+                                Ação
+                           </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Sale sale in Model)
+                        {
+                        <tr>
+                            <td>
+                                @sale.SaleNumber.ToString().PadLeft(6, '0')
+                            </td>
+                            <td>
+                                @sale.Client.Name
+                            </td>
+                            <td>
+                                @sale.TotalValue.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"))
+                            </td>
+                            <td>
+                                @sale.Date.ToString("dd/MM/yyyy")
+                            </td>
+                            @if (sale.Closed == false)
+                            {
+                                <td class="text-center">
+                                    <a asp-action="Create" asp-controller="SaleItem" asp-route-saleId="@sale.SaleId"
+                                       class="btn btn-outline-danger">Editar</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <a asp-action="Close" asp-controller="Sale" asp-route-id="@sale.SaleId" asp-route-totalPrice="@sale.TotalValue"
+                                       class="btn btn-outline-primary">Imprimir</a>
+                                </td>
+                            }
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1>
+                    Não há nenhuma venda cadastrada.
+                </h1>
+            }
+        </div>
+    </div>
+    
+</div>

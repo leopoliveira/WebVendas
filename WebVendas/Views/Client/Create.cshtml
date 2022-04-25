@@ -1,0 +1,75 @@
+﻿@model Client
+@{
+    var submitButton = "Criar";
+    if (Context.Request.RouteValues.ContainsKey("id"))
+    {
+        ViewData["Title"] = "Atualizar";
+        submitButton = "Atualizar";
+    }
+    else
+    {
+        ViewData["Title"] = "Criar";
+    }
+}
+
+
+<div class="container mt-5 align-items-center">
+    <div class="col-10">
+        <h1>@submitButton Cliente</h1>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <form method="post" asp-controller="Client" asp-action="Create" class="row g-3" aria-label="dadosCliente">
+
+        <input asp-for="ClientId" class="form-control" hidden>
+
+        <div class="col-md-4 col-lg-6">
+            <label asp-for="Name" class="form-label">Nome do Cliente:</label>
+            <input asp-for="Name" class="form-control" autofocus>
+            <span asp-validation-for="@Model.Name" class="alert-danger"></span>
+        </div>
+
+        <div class="col-md-2 col-lg-3">
+            <label asp-for="Contact" class="form-label">Contato:</label>
+            <input asp-for="Contact" class="form-control">
+            <span asp-validation-for="@Model.Contact" class="alert-danger"></span>
+        </div>
+
+        <div class="col-md-2 col-lg-3">
+            <label asp-for="Email" class="form-label">Email:</label>
+            <input asp-for="Email" class="form-control">
+        </div>
+
+        <div class="col-md-2 col-lg-10">
+            <label asp-for="Address" class="form-label">Endereço:</label>
+            <input asp-for="Address" class="form-control">
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+            <label asp-for="ZipCode" class="form-label">CEP:</label>
+            <input asp-for="ZipCode" class="form-control">
+        </div>
+
+        <div class="col-md-2 col-lg-4">
+            <label asp-for="City" class="form-label">Cidade:</label>
+            <input asp-for="City" class="form-control">
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+            <label asp-for="State" class="form-label">Estado:</label>
+            <input asp-for="State" class="form-control">
+        </div>
+
+        <div class="container">
+            <div class="row mt-4">
+                <div>
+                    <a asp-action="Index" class="btn btn-lg btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-lg btn-primary">@submitButton</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

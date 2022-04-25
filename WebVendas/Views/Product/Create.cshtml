@@ -1,0 +1,51 @@
+﻿@model Product
+@{
+    var submitButton = "Criar";
+    if (Context.Request.RouteValues.ContainsKey("id"))
+    {
+        ViewData["Title"] = "Atualizar";
+        submitButton = "Atualizar";
+    }
+    else
+    {
+        ViewData["Title"] = "Criar";
+    }
+}
+
+
+<div class="container mt-5 align-items-center">
+    <div class="col-10">
+        <h1>@submitButton Produto</h1>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <form method="post" asp-controller="Product" asp-action="Create" class="row g-3" aria-label="dadosProduto">
+
+        <input asp-for="ProductId" class="form-control" hidden>
+
+        <div class="col-md-4 col-lg-10">
+            <label asp-for="Name" class="form-label">Nome do Produto:</label>
+            <input asp-for="Name" class="form-control" autofocus>
+            <span asp-validation-for="@Model.Name" class="alert-danger"></span>
+        </div>
+
+        <div class="col-md-2 col-lg-2">
+            <label asp-for="Value" class="form-label">Valor (R$):</label>
+            <input asp-for="Value" class="form-control" onblur="this.value = this.value.replace(/,/g, '.')">
+            <span asp-validation-for="@Model.Value" class="alert-danger"></span>
+        </div>
+
+        <div class="container">
+            <div class="row mt-4">
+                <div>
+                    <a asp-action="Index" class="btn btn-lg btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-lg btn-primary">@submitButton</button>
+                </div>              
+            </div>
+        </div>
+    </form>
+</div>
+

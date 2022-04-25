@@ -1,0 +1,29 @@
+﻿@model Client
+
+@{
+    ViewData["Title"] = "Excluir";
+}
+
+<div class="container mt-5 align-items-center">
+    <div class="col-10">
+        <h1>Excluir Cliente</h1>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <form method="post" asp-controller="Client" asp-action="Delete" class="row g-3" aria-label="dadosCliente">
+
+        <input asp-for="ClientId" class="form-control" hidden>
+
+        <p class="lead fw-bold">
+            Tem certeza que deseja excluir o cliente <span class="alert alert-danger">@Model.Name</span> ?
+        </p>
+        <div class="container">
+            <button type="submit" class="btn btn-lg btn-danger">Excluir</button>
+            <a asp-action="Index" class="btn btn-lg btn-primary">Cancelar</a>
+        </div>
+
+    </form>
+</div>

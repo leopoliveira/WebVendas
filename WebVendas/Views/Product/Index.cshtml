@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebVendas.Models.Entities.Product>
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<div class="container mt-5 align-items-center">
+
+    <div class="row g-3">
+        <div class="col-8">
+            <h1>Produtos</h1>
+        </div>
+        <div class="col-2">
+            <a asp-action="Create" class="btn btn-lg btn-primary">Novo Produto</a>
+        </div>
+        <div class="col-2">
+            <a asp-action="Client" asp-controller="Sale" class="btn btn-lg btn-success">Nova Venda</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped productTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">
+                                Produto
+                            </th>
+                            <th scope="col" class="text-center">
+                                Valor do Produto
+                            </th>
+                            <th scope="col" class="text-center">
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Product product in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    @product.Name
+                                </td>
+                                <td class="text-center align-middle">
+                                    @product.Value.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"))
+                                </td>
+                                <td>
+                                    <a asp-action="Create" asp-route-id="@product.ProductId" 
+                                       class="btn btn-outline-primary">
+                                        Editar
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@product.ProductId" 
+                                       class="btn btn-outline-danger">
+                                        Excluir
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1>
+                    Não há nenhum produto cadastrado.
+                </h1>
+            }
+        </div>
+    </div>
+
+</div>
