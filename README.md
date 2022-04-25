@@ -75,6 +75,7 @@ Na pasta ***WebVendas***, procure pelo arquivo ***WebVendas.csproj*** e abra-o c
 
 ### Dependências
 Instale as dependências do projeto utilizando o pacote [NuGet](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio), tanto no Visual Studio quanto no Visual Studio Code.
+Instale o [MySQL](https://dev.mysql.com/downloads/installer/), crie uma nova base de dados e adicione a connection string a injeção de dependências do arquivo Program.cs.
 
 ### Rode o projeto
 
